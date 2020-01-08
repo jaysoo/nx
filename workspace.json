@@ -526,6 +526,84 @@
         }
       }
     },
+    "react-native": {
+      "root": "packages/react-native",
+      "sourceRoot": "packages/react-native",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/react-native/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build-base": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "build/packages/react-native",
+            "tsConfig": "packages/react-native/tsconfig.lib.json",
+            "packageJson": "packages/react-native/package.json",
+            "main": "packages/react-native/index.ts",
+            "updateBuildableProjectDepsInPackageJson": false,
+            "assets": [
+              {
+                "input": "packages/react-native",
+                "glob": "**/files/**",
+                "output": "/"
+              },
+              {
+                "input": "packages/react-native",
+                "glob": "**/files/**/.gitkeep",
+                "output": "/"
+              },
+              {
+                "input": "packages/react-native",
+                "glob": "**/files/**/.babelrc__tmpl__",
+                "output": "/"
+              },
+              {
+                "input": "packages/react-native",
+                "glob": "**/files/**/.browserslistrc__tmpl__",
+                "output": "/"
+              },
+              {
+                "input": "packages/react-native",
+                "glob": "**/*.json",
+                "output": "/"
+              },
+              {
+                "input": "packages/react-native",
+                "glob": "**/*.d.ts",
+                "output": "/"
+              },
+              {
+                "input": "packages/react-native",
+                "glob": "**/*.js",
+                "output": "/"
+              },
+              "LICENSE"
+            ]
+          }
+        },
+        "build": {
+          "builder": "@nrwl/workspace:run-commands",
+          "outputs": ["build/packages/react-native"],
+          "options": {
+            "commands": [
+              {
+                "command": "nx build-base react-native"
+              },
+              {
+                "command": "node ./scripts/copy-readme.js react-native"
+              }
+            ],
+            "parallel": false
+          }
+        }
+      }
+    },
     "nx-plugin": {
       "root": "packages/nx-plugin",
       "sourceRoot": "packages/nx-plugin",
@@ -1449,6 +1527,22 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "e2e/react/jest.config.js",
+            "passWithNoTests": true,
+            "runInBand": true
+          }
+        }
+      }
+    },
+    "e2e-react-native": {
+      "root": "e2e/react-native",
+      "sourceRoot": "e2e/react-native",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "e2e/react-native/jest.config.js",
             "passWithNoTests": true,
             "runInBand": true
           }

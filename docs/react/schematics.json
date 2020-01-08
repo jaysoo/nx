@@ -9,6 +9,7 @@
   "node",
   "nx-plugin",
   "react",
+  "react-native",
   "storybook",
   "web",
   "workspace"

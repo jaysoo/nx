@@ -141,6 +141,7 @@ const pkgFiles = [
   'build/npm/storybook/package.json',
   'build/npm/angular/package.json',
   'build/npm/react/package.json',
+  'build/npm/react-native/package.json',
   'build/npm/next/package.json',
   'build/npm/web/package.json',
   'build/npm/node/package.json',

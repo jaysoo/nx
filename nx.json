@@ -54,6 +54,10 @@
       "tags": [],
       "implicitDependencies": ["workspace", "cypress", "jest"]
     },
+    "react-native": {
+      "tags": [],
+      "implicitDependencies": ["workspace", "jest"]
+    },
     "storybook": {
       "tags": [],
       "implicitDependencies": ["cypress", "workspace"]
@@ -147,6 +151,10 @@
     "e2e-react": {
       "tags": [],
       "implicitDependencies": ["react"]
+    },
+    "e2e-react-native": {
+      "tags": [],
+      "implicitDependencies": ["react-native"]
     },
     "e2e-storybook": {
       "tags": [],

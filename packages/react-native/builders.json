@@ -1,0 +1,20 @@
+{
+  "$schema": "@angular-devkit/architect/src/builders-schema.json",
+  "builders": {
+    "run-ios": {
+      "implementation": "./src/builders/run-ios/run-ios.impl",
+      "schema": "./src/builders/run-ios/schema.json",
+      "description": "Runs iOS application."
+    },
+    "build": {
+      "implementation": "./src/builders/build/build.impl",
+      "schema": "./src/builders/build/schema.json",
+      "description": "Builds the JS bundle."
+    },
+    "dev-server": {
+      "implementation": "./src/builders/dev-server/dev-server.impl",
+      "schema": "./src/builders/dev-server/schema.json",
+      "description": "Starts the dev server for JS bundle."
+    }
+  }
+}
