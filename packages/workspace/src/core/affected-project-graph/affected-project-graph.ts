@@ -14,6 +14,8 @@ import { getTouchedNpmPackages } from './locators/npm-packages';
 import { getImplicitlyTouchedProjectsByJsonChanges } from './locators/implicit-json-changes';
 import {
   AffectedProjectGraphContext,
+  AllProjectsTouched,
+  SubsetOfProjectsTouched,
   TouchedProjectLocator
 } from './affected-project-graph-models';
 import { normalizeNxJson } from '../normalize-nx-json';
@@ -33,14 +35,24 @@ export function filterAffected(
     getTouchedNpmPackages,
     getImplicitlyTouchedProjectsByJsonChanges
   ];
-  const touchedProjects = touchedProjectLocators.reduce(
-    (acc, f) => {
-      return acc.concat(
-        f(touchedFiles, workspaceJson, normalizedNxJson, packageJson)
-      );
-    },
-    [] as string[]
-  );
+
+  let touchedProjects: string[] = [];
+  for (const f of touchedProjectLocators) {
+    const result = f(
+      touchedFiles,
+      workspaceJson,
+      normalizedNxJson,
+      packageJson
+    );
+
+    if (result instanceof AllProjectsTouched) {
+      touchedProjects = Object.keys(graph.nodes);
+      // Short-circuit loop if all projects are touched.
+      break;
+    } else if (result instanceof SubsetOfProjectsTouched) {
+      touchedProjects = touchedProjects.concat(result.projects);
+    }
+  }
   return filterAffectedProjects(graph, {
     workspaceJson,
     nxJson: normalizedNxJson,

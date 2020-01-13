@@ -52,7 +52,7 @@ describe('getImplicitlyTouchedProjectsByJsonChanges', () => {
       workspaceJson,
       nxJson
     );
-    expect(result).toEqual(['proj2']);
+    expect(result).toMatchObject({ projects: ['proj2'] });
   });
 
   it('should handle whole file changes', () => {
@@ -68,6 +68,6 @@ describe('getImplicitlyTouchedProjectsByJsonChanges', () => {
       workspaceJson,
       nxJson
     );
-    expect(result).toEqual(['proj1', 'proj2']);
+    expect(result).toMatchObject({ projects: ['proj1', 'proj2'] });
   });
 });

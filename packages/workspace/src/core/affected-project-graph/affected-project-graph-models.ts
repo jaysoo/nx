@@ -7,11 +7,19 @@ export interface AffectedProjectGraphContext {
   touchedProjects: string[];
 }
 
+export class AllProjectsTouched {}
+
+export class SubsetOfProjectsTouched {
+  constructor(public projects: string[]) {}
+}
+
+export class NoProjectsTouched {}
+
 export interface TouchedProjectLocator<T extends Change = Change> {
   (
     fileChanges: FileChange<T>[],
     workspaceJson?: any,
     nxJson?: NxJson<string[]>,
     packageJson?: any
-  ): string[];
+  ): AllProjectsTouched | SubsetOfProjectsTouched | NoProjectsTouched;
 }

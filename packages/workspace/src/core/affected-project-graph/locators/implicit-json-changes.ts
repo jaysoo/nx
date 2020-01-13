@@ -4,16 +4,20 @@ import {
   JsonChange,
   walkJsonTree
 } from '../../../utils/json-diff';
-import { TouchedProjectLocator } from '../affected-project-graph-models';
+import {
+  NoProjectsTouched,
+  SubsetOfProjectsTouched,
+  TouchedProjectLocator
+} from '../affected-project-graph-models';
 import { ImplicitDependencyEntry } from '../../shared-interfaces';
 
 export const getImplicitlyTouchedProjectsByJsonChanges: TouchedProjectLocator<
   WholeFileChange | JsonChange
-> = (touchedFiles, workspaceJson, nxJson): string[] => {
+> = (touchedFiles, workspaceJson, nxJson) => {
   const { implicitDependencies } = nxJson;
 
   if (!implicitDependencies) {
-    return [];
+    return new NoProjectsTouched();
   }
 
   const touched = [];
@@ -37,7 +41,7 @@ export const getImplicitlyTouchedProjectsByJsonChanges: TouchedProjectLocator<
     }
   }
 
-  return touched;
+  return new SubsetOfProjectsTouched(touched);
 };
 
 function getTouchedProjectsByJsonFile(

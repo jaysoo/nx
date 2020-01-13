@@ -1,26 +1,32 @@
-import { TouchedProjectLocator } from '../affected-project-graph-models';
+import {
+  NoProjectsTouched,
+  SubsetOfProjectsTouched,
+  TouchedProjectLocator
+} from '../affected-project-graph-models';
 
 export const getTouchedProjects: TouchedProjectLocator = (
   touchedFiles,
   workspaceJson
-): string[] => {
-  return touchedFiles
-    .map(f => {
-      return Object.keys(workspaceJson.projects).find(projectName => {
-        const p = workspaceJson.projects[projectName];
-        return f.file.startsWith(p.root);
-      });
-    })
-    .filter(Boolean);
+) => {
+  return new SubsetOfProjectsTouched(
+    touchedFiles
+      .map(f => {
+        return Object.keys(workspaceJson.projects).find(projectName => {
+          const p = workspaceJson.projects[projectName];
+          return f.file.startsWith(p.root);
+        });
+      })
+      .filter(Boolean)
+  );
 };
 
 export const getImplicitlyTouchedProjects: TouchedProjectLocator = (
   fileChanges,
   workspaceJson,
   nxJson
-): string[] => {
+) => {
   if (!nxJson.implicitDependencies) {
-    return [];
+    return new NoProjectsTouched();
   }
 
   const touched = [];
@@ -41,5 +47,5 @@ export const getImplicitlyTouchedProjects: TouchedProjectLocator = (
     }
   }
 
-  return touched;
+  return new SubsetOfProjectsTouched(touched);
 };
