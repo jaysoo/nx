@@ -4,13 +4,13 @@ import {
   getAllDocumentsPaths,
   DocumentData,
   getVersions,
-  VersionData,
+  ArchiveVersionData,
 } from '@nrwl/nx-dev/data-access-documents';
 import { DocViewer } from '@nrwl/nx-dev/feature-doc-viewer';
 
 interface DocumentationProps {
   document: DocumentData;
-  versions: VersionData[];
+  versions: ArchiveVersionData[];
 }
 
 interface DocumentationParams {
